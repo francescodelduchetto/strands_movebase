@@ -28,12 +28,12 @@ private:
 
 public:
 
-    CalibrateCameraServer(const std::string& name, const std::string& camera_name, double angle) :
+    CalibrateCameraServer(const std::string& name, const std::string& camera_name, const std::string& points_suffix_name, double angle) :
         server(n, name, boost::bind(&CalibrateCameraServer::execute_cb, this, _1), false),
         action_name(name),
         client(n.serviceClient<mongodb_store::SetParam>("/config_manager/set_param")),
         camera_name(camera_name),
-        camera_topic(camera_name + "/depth/color/points"),
+        camera_topic(camera_name + points_suffix_name),
         desired_angle(angle)
     {
         server.start();
@@ -284,7 +284,14 @@ public:
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "calibrate_chest");
-    CalibrateCameraServer calibrate(ros::this_node::getName(), "chest_rs", 46.0);
+    ros::NodeHandle nh("~");
+
+    std::string chest_camera_name = "chest_xtion";
+    std::string points_suffix_name = "/depth/points";
+    nh.getParam("chest_camera_name", chest_camera_name);
+    nh.getParam("points_suffix_name", points_suffix_name);
+
+    CalibrateCameraServer calibrate(ros::this_node::getName(), chest_camera_name, points_suffix_name, 46.0);
     ros::spin();
 
 	return 0;

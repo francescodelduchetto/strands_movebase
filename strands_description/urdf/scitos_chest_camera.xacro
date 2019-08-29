@@ -11,7 +11,7 @@
   <link name="base_link" />
 
   <!-- Connect base to chest_rs_link -->
-  <link name="chest_rs_link">
+  <link name="$(arg chest_camera_name)_link">
     <visual>
       <origin rpy="3.14 0 0" xyz="0 0 0"/>
       <geometry>
@@ -26,24 +26,60 @@
     </collision>
   </link>
 
-  <link name="chest_rs_height_tilt_link"/>
+  <link name="$(arg chest_camera_name)_height_tilt_link"/>
 
-  <joint name="chest_rs_height_joint" type="fixed" >
+  <joint name="$(arg chest_camera_name)_height_joint" type="fixed" >
     <!-- Z height from calibrate_chest -->
     <axis xyz="1 0 0"/>
     <origin rpy="0 0 0" xyz="0.0294 0 1.161783" />
     <limit effort="1000" velocity="1000" lower="0.5" upper="1.5"/>
     <parent link="base_link"/>
-    <child link="chest_rs_height_tilt_link"/>
+    <child link="$(arg chest_camera_name)_height_tilt_link"/>
   </joint>
 
-  <joint name="chest_rs_tilt_joint" type="fixed" >
+  <joint name="$(arg chest_camera_name)_tilt_joint" type="fixed" >
     <!-- Rotation y angle from calibrate_chest-->
     <axis xyz="1 0 0"/>
     <origin rpy="0 0.862981 0" xyz="0 0 0" />
-    <parent link="chest_rs_height_tilt_link"/>
-    <child link="chest_rs_link"/>
+    <parent link="$(arg chest_camera_name)_height_tilt_link"/>
+    <child link="$(arg chest_camera_name)_link"/>
   </joint>
 
+  <xacro:property name="chest_camera_name" value="$(arg chest_camera_name)"/>  
+  <xacro:if value="${chest_camera_name == 'chest_xtion'}">
+    <!-- chest_xtion internal frames -->
+    <link name="$(arg chest_camera_name)_depth_frame"/>
+    <link name="$(arg chest_camera_name)_rgb_frame"/>
+    <link name="$(arg chest_camera_name)_depth_optical_frame"/>
+    <link name="$(arg chest_camera_name)_rgb_optical_frame"/>
+
+    <joint name="$(arg chest_camera_name)_base_link" type="fixed" >
+      <origin rpy="0 0 0"
+            xyz="0 0.045 0" />
+      <parent link="$(arg chest_camera_name)_link"/>
+      <child link="$(arg chest_camera_name)_depth_frame"/>
+    </joint>
+
+    <joint name="$(arg chest_camera_name)_base_link1" type="fixed" >
+      <origin rpy="0 0 0"
+            xyz="0 0.02 0" />
+      <parent link="$(arg chest_camera_name)_link"/>
+      <child link="$(arg chest_camera_name)_rgb_frame"/>
+    </joint>
+
+    <joint name="$(arg chest_camera_name)_base_link2" type="fixed" >
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966"
+            xyz="0 0 0" />
+    <parent link="$(arg chest_camera_name)_depth_frame"/>
+      <child link="$(arg chest_camera_name)_depth_optical_frame"/>
+    </joint>
+
+    <joint name="$(arg chest_camera_name)_base_link3" type="fixed" >
+      <origin rpy="-1.5707963267948966 0 -1.5707963267948966"
+            xyz="0 0 0" />
+      <parent link="$(arg chest_camera_name)_rgb_frame"/>
+      <child link="$(arg chest_camera_name)_rgb_optical_frame"/>
+    </joint>	
+  </xacro:if>
 
 </robot>
