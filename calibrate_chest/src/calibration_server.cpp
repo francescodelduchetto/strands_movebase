@@ -33,7 +33,7 @@ public:
         action_name(name),
         client(n.serviceClient<mongodb_store::SetParam>("/config_manager/set_param")),
         camera_name(camera_name),
-        camera_topic(camera_name + "/depth/points"),
+        camera_topic(camera_name + "/depth/color/points"),
         desired_angle(angle)
     {
         server.start();
@@ -284,7 +284,7 @@ public:
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "calibrate_chest");
-    CalibrateCameraServer calibrate(ros::this_node::getName(), "chest_xtion", 46.0);
+    CalibrateCameraServer calibrate(ros::this_node::getName(), "chest_rs", 46.0);
     ros::spin();
 
 	return 0;

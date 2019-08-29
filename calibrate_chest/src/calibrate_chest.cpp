@@ -141,10 +141,14 @@ int main(int argc, char** argv)
 {
     ros::init(argc, argv, "calibrate_chest");
 	ros::NodeHandle n;
-	
-    std::string camera_topic = "chest_xtion";
+
+    std::string camera_points_topic = "chest_xtion/depth/points";
+    if (argc > 1) {
+        camera_points_topic = std::string(argv[1]);
+    }
+
     client = n.serviceClient<mongodb_store::SetParam>("/config_manager/set_param");
-	ros::Subscriber sub = n.subscribe(camera_topic + "/depth/points", 1, callback);
+	ros::Subscriber sub = n.subscribe(camera_points_topic, 1, callback);
     
     ros::spin();
 	
