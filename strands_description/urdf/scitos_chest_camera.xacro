@@ -31,7 +31,7 @@
   <joint name="$(arg chest_camera_name)_height_joint" type="fixed" >
     <!-- Z height from calibrate_chest -->
     <axis xyz="1 0 0"/>
-    <origin rpy="0 0 0" xyz="0.0294 0 1.161783" />
+    <origin rpy="0 0 0" xyz="0.0294 0 1.16" />
     <limit effort="1000" velocity="1000" lower="0.5" upper="1.5"/>
     <parent link="base_link"/>
     <child link="$(arg chest_camera_name)_height_tilt_link"/>
@@ -40,7 +40,7 @@
   <joint name="$(arg chest_camera_name)_tilt_joint" type="fixed" >
     <!-- Rotation y angle from calibrate_chest-->
     <axis xyz="1 0 0"/>
-    <origin rpy="0 0.862981 0" xyz="0 0 0" />
+    <origin rpy="0 0.85 0" xyz="0 0 0" />
     <parent link="$(arg chest_camera_name)_height_tilt_link"/>
     <child link="$(arg chest_camera_name)_link"/>
   </joint>

@@ -39,7 +39,7 @@
   <joint name="$(arg chest_camera_name)_tilt_joint" type="continuous" >
     <!-- Rotation y angle from calibrate_chest-->
     <axis xyz="0 0 0"/>
-    <origin rpy="0 0 0.811891" xyz="0 0 0" />
+    <origin rpy="0 0 0.927019" xyz="0 0 0" />
     <parent link="$(arg chest_camera_name)_height_tilt_link"/>
     <child link="$(arg chest_camera_name)_link"/>
   </joint>

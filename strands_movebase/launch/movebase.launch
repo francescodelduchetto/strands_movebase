@@ -7,6 +7,7 @@
     <arg name="chest_camera_name" default="chest_xtion"/>
     <arg name="chest_camera_machine" default="localhost"/>
     <arg name="chest_camera_user" default=""/>
+    <arg name="chest_camera_manager" default="/$(arg chest_camera_name)/$(arg chest_camera_name)_nodelet_manager"/>
 
     <arg name="with_head_xtion" default="false"/>
     <arg name="head_xtion_machine" default="localhost"/>
@@ -18,7 +19,7 @@
     <arg name="no_go_map" default=""/>
 
     <arg name="z_stair_threshold" default="0.12"/>
-    <arg name="z_obstacle_threshold" default="0.01"/>
+    <arg name="z_obstacle_threshold" default="0.1"/>
 
     <!-- This can be pointed to a yaml file of parameters to load in the
          movebase node so that each site can set the optimal parameters for
@@ -30,7 +31,7 @@
     <arg name="laser_angle_cutoff" default="10.0"/>
     <arg name="subsample_resolution" default="0.05"/>
     <arg name="subsample_min_points" default="5"/>
-    <arg name="subsample_skip_points" default="10"/>
+    <arg name="subsample_skip_points" default="50"/>
 
     <!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
     <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
@@ -92,6 +93,7 @@
         <arg name="chest_camera_name" value="$(arg chest_camera_name)"/>
         <arg name="chest_camera_machine" value="$(arg chest_camera_machine)"/>
         <arg name="chest_camera_user" value="$(arg chest_camera_user)"/>
+        <arg name="chest_camera_manager" value="$(arg chest_camera_manager)"/>
 
         <arg name="with_head_xtion" value="$(arg with_head_xtion)"/>
         <arg name="head_xtion_machine" value="$(arg head_xtion_machine)"/>
