@@ -51,6 +51,7 @@ private:
         pcl::PointCloud<pcl::PointXYZ>::Ptr inlier_cloud(new pcl::PointCloud<pcl::PointXYZ>());
         pcl::PointCloud<pcl::PointXYZ>::Ptr outlier_cloud(new pcl::PointCloud<pcl::PointXYZ>());
 
+
         for (int i = 0; i < points.size(); ++i) {
             if (is_inlier(points[i].getVector3fMap(), plane, threshold)) {
                 inlier_cloud->push_back(points[i]);
@@ -286,10 +287,12 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "calibrate_chest");
     ros::NodeHandle nh("~");
 
-    std::string chest_camera_name = "chest_xtion";
-    std::string points_suffix_name = "/depth/points";
-    nh.getParam("chest_camera_name", chest_camera_name);
-    nh.getParam("points_suffix_name", points_suffix_name);
+    std::string chest_camera_name;
+    std::string points_suffix_name;
+    if (!nh.getParam("chest_camera_name", chest_camera_name))
+        chest_camera_name = "chest_xtion";
+    if (!nh.getParam("points_suffix_name", points_suffix_name))
+        points_suffix_name = "/depth/points";
 
     CalibrateCameraServer calibrate(ros::this_node::getName(), chest_camera_name, points_suffix_name, 46.0);
     ros::spin();

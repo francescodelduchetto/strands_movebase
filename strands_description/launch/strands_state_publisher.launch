@@ -1,14 +1,14 @@
 <launch> 
     <arg name="machine" default="localhost" />
     <arg name="user" default="" />
-    <arg name="chest_camera_name" default="chest_xtion"/>
+    <arg name="chest_xtion_name" default="chest_xtion"/>
 
 	<!-- NOW when launching in a remote mode it will need the ROS_ENV_LOADER set if not it will leave it empty -->
 	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 
     <!-- Robot -->
-    <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find strands_description)/urdf/scitos_chest_camera.xacro' chest_camera_name:=$(arg chest_camera_name)" />
-    <arg name="model_file" default="$(find xacro)/xacro.py '$(find strands_description)/urdf/scitos_all_robot_model.xacro' chest_camera_name:=$(arg chest_camera_name)" />
+    <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find strands_description)/urdf/scitos_chest_camera.xacro' chest_camera_name:=$(arg chest_xtion_name)" />
+    <arg name="model_file" default="$(find xacro)/xacro.py '$(find strands_description)/urdf/scitos_all_robot_model.xacro' chest_camera_name:=$(arg chest_xtion_name)" />
     <param name="robot_description" command="$(arg model_file)" />
 
     <group ns="chest">
